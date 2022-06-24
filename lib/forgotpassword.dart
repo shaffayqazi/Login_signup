@@ -14,7 +14,7 @@ class _forgotpasswordState extends State<forgotpassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color.fromRGBO(119, 7, 55, 100),
+        backgroundColor:  Colors.orange.shade800,
         body:
             Stack(
               children: [
@@ -86,7 +86,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(119, 7, 55, 100),
+                      color:   Colors.orange.shade800,
                       borderRadius: BorderRadius.circular(40),
                       ),
                   padding:
@@ -106,7 +106,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                   child: Text(
                     "BACK",
                     style: TextStyle(
-                      color: Color.fromRGBO(119, 7, 55, 100),
+                      color:  Colors.orange.shade800,
                     ),
                   ),
                 ),

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:login_signup/homepage.dart';
-
+import 'Colors.dart';
 import 'mainscreen.dart';
 
 class signup extends StatefulWidget {
@@ -11,28 +11,28 @@ class signup extends StatefulWidget {
   @override
   State<signup> createState() => _signupState();
 }
+
 class _signupState extends State<signup> {
-
   static Future<User?> SignUpUsingEmailPassword(
-        {required String email,
-          required String password,
-          required BuildContext context}) async {
-      FirebaseAuth auth = FirebaseAuth.instance;
-      User? user;
-      try {
-          UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-            email:email , password:password );
-          user = userCredential.user;
-      }on FirebaseAuthException catch (e) {
-        if (e.code == "user-not-found") {
-          print("NO User found for that email");
-        }
+      {required String email,
+      required String password,
+      required BuildContext context}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+    try {
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      user = userCredential.user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "user-not-found") {
+        print("NO User found for that email");
       }
-      return user;
-
     }
-  TextEditingController _emailcontroller = TextEditingController();
-  TextEditingController _passwordcontroller = TextEditingController();
+    return user;
+  }
+
+  final TextEditingController _emailcontroller = TextEditingController();
+  final TextEditingController _passwordcontroller = TextEditingController();
 
   @override
   void dispose() {
@@ -58,12 +58,12 @@ class _signupState extends State<signup> {
     }
   }
 
-  bool _showPassword = false;
+  bool _ShowPassword = false;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: theme.themeColor,
         body: Stack(
           children: [
             const Align(
@@ -110,11 +110,11 @@ class _signupState extends State<signup> {
                       child: TextField(
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor:
-                              Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          fillColor: theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.account_circle),
                           hintText: "Name",
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
@@ -127,11 +127,11 @@ class _signupState extends State<signup> {
                         controller: _emailcontroller,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor:
-                              Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          fillColor: theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.email_rounded),
                           hintText: "Email",
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
@@ -142,27 +142,27 @@ class _signupState extends State<signup> {
                           top: 10, bottom: 10, left: 12, right: 12),
                       child: TextField(
                         controller: _passwordcontroller,
-                        obscureText: !_showPassword,
+                        obscureText: !_ShowPassword,
                         decoration: InputDecoration(
                           filled: true,
-                          fillColor:
-                              Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          fillColor: theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
                             icon: Icon(
                               Icons.remove_red_eye,
-                              color: _showPassword ? Colors.blue : Colors.grey,
+                              color: _ShowPassword ? Colors.blue : Colors.grey,
                             ),
                             onPressed: () {
                               setState(
                                 () {
-                                  _showPassword = !_showPassword;
+                                  _ShowPassword = !_ShowPassword;
                                 },
                               );
                             },
                           ),
                           hintText: "Password",
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
@@ -173,16 +173,19 @@ class _signupState extends State<signup> {
                     ),
                     CupertinoButton(
                       padding: const EdgeInsets.only(left: 30, right: 30),
-                      color: Colors.orange.shade800,
+                      color: theme.button,
                       onPressed: () async {
-
-                     User? user =  await SignUpUsingEmailPassword(email: _emailcontroller.text, password: _passwordcontroller.text, context: context);
-                     print(user);
-                     if(user!=null)
-                     {
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=> const mainscreen()));
-                     }
-
+                        User? user = await SignUpUsingEmailPassword(
+                            email: _emailcontroller.text,
+                            password: _passwordcontroller.text,
+                            context: context);
+                        print(user);
+                        if (user != null) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const mainscreen()));
+                        }
                       },
                       borderRadius: BorderRadius.circular(40),
                       child: const Text("SIGNUP"),
@@ -197,7 +200,7 @@ class _signupState extends State<signup> {
                       child: Text(
                         "LOGIN",
                         style: TextStyle(
-                          color: Colors.orange.shade800,
+                          color: theme.button,
                         ),
                       ),
                     ),

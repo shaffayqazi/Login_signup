@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:login_signup/homepage.dart';
+import 'Colors.dart';
 
 class forgotpassword extends StatefulWidget {
   const forgotpassword({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _forgotpasswordState extends State<forgotpassword> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.orange.shade800,
+        backgroundColor: theme.themeColor,
         body: Stack(
           children: [
             const Align(
@@ -75,7 +76,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                         decoration: InputDecoration(
                           filled: true,
                           fillColor:
-                              Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.email_rounded),
                           hintText: "Email",
                           border: OutlineInputBorder(
@@ -99,7 +100,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                     ),
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.orange.shade800,
+                        color: theme.button,
                         borderRadius: BorderRadius.circular(40),
                       ),
                       padding: EdgeInsets.only(
@@ -127,7 +128,7 @@ class _forgotpasswordState extends State<forgotpassword> {
                       child: Text(
                         "BACK",
                         style: TextStyle(
-                          color: Colors.orange.shade800,
+                          color: theme.button,
                         ),
                       ),
                     ),

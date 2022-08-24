@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:login_signup/signup.dart';
-
+import 'Colors.dart';
 import 'forgotpassword.dart';
 import 'mainscreen.dart';
-
 
 class Loginpage extends StatefulWidget {
   const Loginpage({Key? key}) : super(key: key);
@@ -15,6 +14,10 @@ class Loginpage extends StatefulWidget {
 }
 
 class _LoginpageState extends State<Loginpage> {
+
+  final TextEditingController _Emailcontroller = TextEditingController();
+  final TextEditingController _Passwordcontroller = TextEditingController();
+
   static Future<User?> loginUsingEmailPassword(
       {required String email,
         required String password,
@@ -33,14 +36,21 @@ class _LoginpageState extends State<Loginpage> {
     return user;
   }
 
+  @override
+  void dispose() {
+    _Emailcontroller.dispose();
+    _Passwordcontroller.dispose();
+    super.dispose();
+  }
+
+
   bool _showPassword = false;
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailcontroller = TextEditingController();
-    TextEditingController _passwordcontroller = TextEditingController();
+
     return SafeArea(
       child: Scaffold(
-        backgroundColor:  Colors.orange.shade800,
+        backgroundColor:  theme.themeColor,
         body: Stack(
           children: [
             const Align(
@@ -93,14 +103,16 @@ class _LoginpageState extends State<Loginpage> {
                       padding: const EdgeInsets.only(
                           top: 10, bottom: 10, left: 12, right: 12),
                       child: TextField(
-                        controller: _emailcontroller,
+                        controller: _Emailcontroller,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor:
-                          Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.email_rounded),
                           hintText: "Email",
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
@@ -110,12 +122,13 @@ class _LoginpageState extends State<Loginpage> {
                       padding: const EdgeInsets.only(
                           top: 10, bottom: 10, left: 12, right: 12),
                       child: TextField(
-                        controller: _passwordcontroller,
+                        controller: _Passwordcontroller,
                         obscureText: !_showPassword,
+                        keyboardType: TextInputType.visiblePassword,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor:
-                          Color.fromRGBO(119, 7, 55, 100).withOpacity(0.1),
+                          theme.textfield.withOpacity(0.25),
                           prefixIcon: const Icon(Icons.lock),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -132,6 +145,7 @@ class _LoginpageState extends State<Loginpage> {
                           ),
                           hintText: "Password",
                           border: OutlineInputBorder(
+                            borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
@@ -154,11 +168,11 @@ class _LoginpageState extends State<Loginpage> {
                     ),
                     CupertinoButton(
                       padding: const EdgeInsets.only(left: 30, right: 30),
-                      color:   Colors.orange.shade800,
+                      color:   theme.button,
                       onPressed: () async {
                         User? user = await loginUsingEmailPassword(
-                            email: _emailcontroller.text,
-                            password: _passwordcontroller.text,
+                            email: _Emailcontroller.text,
+                            password: _Passwordcontroller.text,
                             context: context);
                         print(user);
                         if(user!=null)
@@ -179,7 +193,7 @@ class _LoginpageState extends State<Loginpage> {
                       child: Text(
                         "SIGNUP",
                         style: TextStyle(
-                          color:   Colors.orange.shade800,
+                          color:   theme.button,
                         ),
                       ),
                     ),
